@@ -25,6 +25,11 @@ namespace NYCTaxiViewer.Controllers
             return View(await _context.TaxiTrips.ToListAsync());
         }
 
+        public async Task<IActionResult> Vizualization()
+        {
+            return View(await _context.TaxiTrips.ToListAsync());
+        }
+
         // GET: TaxiTrips/Details/5
         public async Task<IActionResult> Details(int? id)
         {
