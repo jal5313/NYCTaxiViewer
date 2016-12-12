@@ -16,7 +16,7 @@ namespace NYCTaxiViewer.Controllers
 
         public TaxiTripsController(TaxiContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: TaxiTrips
@@ -25,7 +25,12 @@ namespace NYCTaxiViewer.Controllers
             return View(await _context.TaxiTrips.ToListAsync());
         }
 
-        public async Task<IActionResult> Vizualization()
+        public async Task<IActionResult> GetAllJson()
+        {
+            return Json(await _context.TaxiTrips.ToListAsync());
+        }
+
+        public async Task<IActionResult> Visualization()
         {
             return View(await _context.TaxiTrips.ToListAsync());
         }

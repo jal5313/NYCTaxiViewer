@@ -1,0 +1,24 @@
+﻿@model IEnumerable<NYCTaxiViewer.Models.TaxiTrip>
+
+@{
+    ViewData["Title"] = "Visualization";
+}
+<script>
+    var allTaxiTrips
+        
+    $.ajax({
+        url: "/TaxiTrips/GetAllJson",
+        success: function( result ) {
+            allTaxiTrips = result;
+        }
+    }).done(function () {
+        console.log(allTaxiTrips);
+    });
+
+</script>
+
+<h2>Visualization</h2>
+
+<div>
+    <p>Put a map here! </p>
+</div>

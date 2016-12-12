@@ -15,7 +15,7 @@ namespace NYCTaxiViewer.Models
 
             var test = importTaxiTrips();
 
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             
             if (context.TaxiTrips.Any())
