@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NYCTaxiViewer.Data;
+using System.IO;
 
 namespace NYCTaxiViewer.Models
 {
@@ -11,6 +12,10 @@ namespace NYCTaxiViewer.Models
     {
         public static void Initialize(TaxiContext context)
         {
+
+            var test = importTaxiTrips();
+
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             
             if (context.TaxiTrips.Any())
@@ -19,36 +24,55 @@ namespace NYCTaxiViewer.Models
             }
 
             //add test data if the database is empty.
-            var taxiTrips = new TaxiTrip[]
-            {
-                new TaxiTrip
-                {
-                    VendorId = 2,
-                    tpep_pickup_datetime = "1/1/2016 0:00:00",
-                    tpep_dropoff_datetime = "1/1/2016 0:00:00",
-                    passenger_count = 2,
-                    trip_distance = 1.1f,
-                    pickup_longitude = -73.9903717,
-                    pickup_latitude = 40.73469543,
-                    RatecodeID = 1,
-                    store_and_fwd_flag = 'N',
-                    dropoff_longitude = -73.98184204,
-                    dropoff_latitude = 40.73240662,
-                    payment_type = 2,
-                    fare_amount = 7.5f,
-                    extra = 0.5f,
-                    mta_tax = 0.5f,
-                    tip_amount = 0,
-                    tolls_amount = 0,
-                    improvement_surcharge = .03f,
-                    total_amount = 8.8f
-                }
-            };
+
+            var taxiTrips = importTaxiTrips();
+
+           /* var taxiTrips = new TaxiTrip[]
+             */
             foreach (TaxiTrip s in taxiTrips)
             {
                 context.TaxiTrips.Add(s);
             }
             context.SaveChanges();
+        }
+
+        private static TaxiTrip[] importTaxiTrips()
+        {
+            var reader = new StreamReader(File.OpenRead(@"..\..\data\jan02Small.csv"));
+            
+            List<string> values = new List<string>();
+            List<TaxiTrip> loadedTrips = new List<TaxiTrip>();
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+
+                string[] split = line.Split(',');
+
+                TaxiTrip addingTrip = new TaxiTrip();
+                addingTrip.VendorId = int.Parse(split[0]);
+                addingTrip.tpep_pickup_datetime = split[1];
+                addingTrip.tpep_dropoff_datetime = split[2];
+                addingTrip.passenger_count = int.Parse(split[3]);
+                addingTrip.trip_distance = float.Parse(split[4]);
+                addingTrip.pickup_longitude = double.Parse(split[5]);
+                addingTrip.pickup_latitude = double.Parse(split[6]);
+                addingTrip.RatecodeID = int.Parse(split[7]);
+                addingTrip.store_and_fwd_flag = split[8];
+                addingTrip.dropoff_longitude = double.Parse(split[9]);
+                addingTrip.dropoff_latitude = double.Parse(split[10]);
+                addingTrip.payment_type = int.Parse(split[11]);
+                addingTrip.fare_amount = float.Parse(split[12]);
+                addingTrip.extra = float.Parse(split[13]);
+                addingTrip.mta_tax = float.Parse(split[14]);
+                addingTrip.tip_amount = float.Parse(split[15]);
+                addingTrip.tolls_amount = float.Parse(split[16]);
+                addingTrip.improvement_surcharge = float.Parse(split[17]);
+                addingTrip.total_amount = float.Parse(split[18]);
+
+                loadedTrips.Add(addingTrip);
+            }
+
+            return loadedTrips.ToArray();
         }
     }
 }
