@@ -231,6 +231,7 @@
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Controllers\AccountController.cs"
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Controllers\HomeController.cs"
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Controllers\ManageController.cs"
+"D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Controllers\TaxiTripsController.cs"
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Data\ApplicationDbContext.cs"
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Data\DbInitializer.cs"
 "D:\College\SeniorYear\NYCTaxiViewer\src\NYCTaxiViewer\Data\TaxiContext.cs"

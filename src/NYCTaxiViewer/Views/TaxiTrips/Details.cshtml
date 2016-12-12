@@ -1,0 +1,42 @@
+@model NYCTaxiViewer.Models.TaxiTrip
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TaxiTrip</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dropOffLat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dropOffLat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.pdropOffLat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pdropOffLat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.pickUpLat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pickUpLat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.pickUpLon)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.pickUpLon)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,56 @@
+@model NYCTaxiViewer.Models.TaxiTrip
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>TaxiTrip</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="dropOffLat" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="dropOffLat" class="form-control" />
+                <span asp-validation-for="dropOffLat" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="pdropOffLat" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="pdropOffLat" class="form-control" />
+                <span asp-validation-for="pdropOffLat" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="pickUpLat" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="pickUpLat" class="form-control" />
+                <span asp-validation-for="pickUpLat" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="pickUpLon" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="pickUpLon" class="form-control" />
+                <span asp-validation-for="pickUpLon" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
