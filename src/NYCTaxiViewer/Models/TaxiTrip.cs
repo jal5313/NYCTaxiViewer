@@ -16,7 +16,7 @@ namespace NYCTaxiViewer.Models
         public double pickup_longitude { get; set; }
         public double pickup_latitude { get; set; }
         public int RatecodeID { get; set; }
-        public char store_and_fwd_flag { get; set; }
+        public string store_and_fwd_flag { get; set; }
         public double dropoff_longitude { get; set; }
         public double dropoff_latitude { get; set; }
         public int payment_type { get; set; }
