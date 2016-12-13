@@ -46,18 +46,27 @@
             mapTypeId: 'terrain'
         });
 
-        for(i=0;i<start.length;i++){
+        var infowindow = new google.maps.InfoWindow();
+
+        for (i = 0; i < start.length; i++) {
+            placeMarker('Total: $' + data[i].total_amount + ' Distance: ' + data[i].trip_distance + 'mi');
+        }
+
+        function placeMarker(infoWindowString) {
             var startMarkers = new google.maps.Marker({
                 position: new google.maps.LatLng(start[i][0], start[i][1]),
                 icon: 'https://people.rit.edu/bxc1712/markers/start.png',
-                map: map,
-                opacity: .5
+                map: map
             });
             var endMarkers = new google.maps.Marker({
                 position: new google.maps.LatLng(end[i][0], end[i][1]),
                 icon: 'https://people.rit.edu/bxc1712/markers/end.png',
-                map: map,
-                opacity: .5
+                map: map
+            });
+            google.maps.event.addListener(endMarkers, 'mouseover', function () {
+                infowindow.close();
+                infowindow.setContent(infoWindowString);
+                infowindow.open(map, endMarkers);
             });
         }
 
