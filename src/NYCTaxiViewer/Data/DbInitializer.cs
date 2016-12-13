@@ -38,7 +38,7 @@ namespace NYCTaxiViewer.Models
 
         private static TaxiTrip[] importTaxiTrips()
         {
-            var reader = new StreamReader(File.OpenRead(@"..\..\data\jan02Small.csv"));
+            var reader = new StreamReader(File.OpenRead(@"..\..\data\jan02.csv"));
             
             List<string> values = new List<string>();
             List<TaxiTrip> loadedTrips = new List<TaxiTrip>();

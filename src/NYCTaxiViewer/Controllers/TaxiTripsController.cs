@@ -42,7 +42,7 @@ namespace NYCTaxiViewer.Controllers
         public async Task<IActionResult> GetTripsFiltered(String cutoffEndInput)
         {
             DateTime cutoffEnd = DateTime.Parse(cutoffEndInput);
-            DateTime cutoffStart = cutoffEnd.AddHours(-1);
+            DateTime cutoffStart = cutoffEnd.AddMinutes(-10);
 
             var trips = from trip in _context.TaxiTrips
                         where Convert.ToDateTime(trip.tpep_dropoff_datetime) <= cutoffEnd

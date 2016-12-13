@@ -8,7 +8,8 @@
     var allTaxiTrips;
     var tripsAtTime;
 
-    var tripFilterTime = '2016-01-02 00:10:00';
+    var examinedDate = '2016-01-02'
+    var tripFilterTime = '00:10:00';
 
     function initMap(data) {
 
@@ -49,12 +50,14 @@
             var startMarkers = new google.maps.Marker({
                 position: new google.maps.LatLng(start[i][0], start[i][1]),
                 icon: 'https://people.rit.edu/bxc1712/markers/start.png',
-                map: map
+                map: map,
+                opacity: .5
             });
             var endMarkers = new google.maps.Marker({
                 position: new google.maps.LatLng(end[i][0], end[i][1]),
                 icon: 'https://people.rit.edu/bxc1712/markers/end.png',
-                map: map
+                map: map,
+                opacity: .5
             });
         }
 
@@ -71,7 +74,7 @@
                 path:[pickUp,dropOff],
                 geodesic:true,
                 strokeColor: '#333333',
-                strokeOpacity: 1.0,
+                strokeOpacity: .5,
                 strokeWeight: 2
             });
             routePath.setMap(map);
@@ -100,12 +103,26 @@
         });
     }
 
+    function initControls() {
+        $('#timeInput').val('00:10:00')
+
+        updateControls();
+    }
+
+    function updateControls() {
+        tripFilterInput = $('#timeInput').val(); //'00:10:00'
+
+        tripFilterTime = examinedDate + ' ' + tripFilterInput;
+        getDataByTime(tripFilterTime);
+        console.log(tripFilterTime);
+    }
+
 </script>
 <script>
     $(document).ready(function () {
-        console.log('DOC READY');
-        //getDataByTime(tripFilterTime);
-        getAllData();
+        initControls();
+        getDataByTime(tripFilterTime);
+        //getAllData();
     });
 </script>
 <style>
@@ -116,8 +133,24 @@
     html, body {
         height: 100%;
     }
+
+    label {
+        display: block;
+    }
+
+    input.textinput {
+        max-width: none;
+        width: 430px;
+    }
 </style>
 
 <h2>Visualization</h2>
 
 <div id="map"></div>
+
+<div class="controls">
+    <h4>Viewing Trips Around: </h4>
+    <label>HH:MM:SS</label>
+    <label>Input Time: <input type="text" id="timeInput" class="textinput"/></label>
+    <button id="updateButton" onclick="updateControls()">Update</button>
+</div>
