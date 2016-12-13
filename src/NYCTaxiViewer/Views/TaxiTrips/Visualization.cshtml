@@ -3,22 +3,121 @@
 @{
     ViewData["Title"] = "Visualization";
 }
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAutJPrKkRBj52-1zEfmk5FkeSIHJWnkUc"></script>
 <script>
-    var allTaxiTrips
-        
-    $.ajax({
-        url: "/TaxiTrips/GetAllJson",
-        success: function( result ) {
-            allTaxiTrips = result;
+    var allTaxiTrips;
+    var tripsAtTime;
+
+    var tripFilterTime = '2016-01-02 00:10:00';
+
+    function initMap(data) {
+
+        console.log("INIT MAP CALLED!");
+
+        console.log(data);
+
+        var coordList=[];
+        var center = { lat: 40.7230, lng: -74.0006 };
+
+        var start = [];
+        var end = [];
+
+        var startString = [];
+        var endString = [];
+
+        for (var i = 0; i < data.length; i++) {
+            var addingStartArray = [data[i].pickup_latitude, data[i].pickup_longitude];
+            var addingEndArray = [data[i].dropoff_latitude, data[i].dropoff_longitude];
+
+            var addingStartString = data[i].pickup_latitude + ',' + data[i].pickup_longitude;
+            var addingEndString = data[i].dropoff_latitude + ',' + data[i].dropoff_longitude;
+
+            start.push(addingStartArray);
+            end.push(addingEndArray);
+
+            startString.push(addingStartString);
+            endString.push(addingEndString);
         }
-    }).done(function () {
-        console.log(allTaxiTrips);
-    });
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: center,
+            mapTypeId: 'terrain'
+        });
+
+        for(i=0;i<start.length;i++){
+            var startMarkers = new google.maps.Marker({
+                position: new google.maps.LatLng(start[i][0], start[i][1]),
+                icon: 'https://people.rit.edu/bxc1712/markers/start.png',
+                map: map
+            });
+            var endMarkers = new google.maps.Marker({
+                position: new google.maps.LatLng(end[i][0], end[i][1]),
+                icon: 'https://people.rit.edu/bxc1712/markers/end.png',
+                map: map
+            });
+        }
+
+        for(i=0;i<startString.length;i++){
+            var startCoord=startString[i].split(',');
+            var startPt=new google.maps.LatLng(startCoord[0],startCoord[1]);
+            var endCoord=endString[i].split(',');
+            var endPt=new google.maps.LatLng(endCoord[0],endCoord[1]);
+            taxiRoute(startPt,endPt);
+        }
+
+        function taxiRoute(pickUp,dropOff){
+            var routePath=new google.maps.Polyline({
+                path:[pickUp,dropOff],
+                geodesic:true,
+                strokeColor: '#333333',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+            routePath.setMap(map);
+        }
+    }
+
+    function getAllData() {
+        $.ajax({
+            url: "/TaxiTrips/GetAllJson",
+            success: function (result) {
+                allTaxiTrips = result;
+                initMap(result);
+            }
+        }).done(function () {
+        });
+    }
+
+    function getDataByTime(tripFilterTime) {
+        $.ajax({
+            url: "/TaxiTrips/GetTripsFiltered?cutoffEndInput=" + tripFilterTime,
+            success: function (result) {
+                tripsAtTime = result;
+                initMap(result);
+            }
+        }).done(function () {
+        });
+    }
 
 </script>
+<script>
+    $(document).ready(function () {
+        console.log('DOC READY');
+        //getDataByTime(tripFilterTime);
+        getAllData();
+    });
+</script>
+<style>
+    #map {
+        height: 50%;
+    }
+
+    html, body {
+        height: 100%;
+    }
+</style>
 
 <h2>Visualization</h2>
 
-<div>
-    <p>Put a map here! </p>
-</div>
+<div id="map"></div>

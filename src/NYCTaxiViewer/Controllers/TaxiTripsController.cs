@@ -30,6 +30,28 @@ namespace NYCTaxiViewer.Controllers
             return Json(await _context.TaxiTrips.ToListAsync());
         }
 
+        public async Task<IActionResult> GetTripsSorted()
+        {
+            var trips = from trip in _context.TaxiTrips
+                        select trip;
+
+            trips = trips.OrderBy(trip => trip.passenger_count);
+            return Json(trips.ToList());
+        }
+
+        public async Task<IActionResult> GetTripsFiltered(String cutoffEndInput)
+        {
+            DateTime cutoffEnd = DateTime.Parse(cutoffEndInput);
+            DateTime cutoffStart = cutoffEnd.AddHours(-1);
+
+            var trips = from trip in _context.TaxiTrips
+                        where Convert.ToDateTime(trip.tpep_dropoff_datetime) <= cutoffEnd
+                        where Convert.ToDateTime(trip.tpep_dropoff_datetime) >= cutoffStart
+                        select trip;
+            
+            return Json(trips.ToList());
+        }
+
         public async Task<IActionResult> Visualization()
         {
             return View(await _context.TaxiTrips.ToListAsync());
