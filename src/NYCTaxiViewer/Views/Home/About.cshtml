@@ -2,6 +2,27 @@
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<h4>Description</h4>
+
+<p>The New York City Taxi Route Viewer is a visualization of the Yellow Taxi trip sheet data from the NYC Taxi & Limousine Commission. The large amount of data offered a variety of ways to visualize the information. With the size factor in mind, we wanted to have the data, in a way, convey a story through possible patterns and trends when displayed.</p>
+
+<h4>Inspiration</h4>
+
+<p>Our inspiration came from previous project encounters and discussions within past courses. Referring back to when explored autonomous agents, we recalled an experience where these agents also left a colored trail within their travel patterns. From this we thought we could incorporate the thought process with our data: having the data be visually displayed in a way where we could differentiate data concentration in areas.</p>
+
+<h4>Implementation</h4>
+
+<img src="~/images/implementation.png" style="max-width:100%"/>
+
+<p>Our take on displaying the data visually is through the Google Maps API. Our data is retrieved from a MVC database running off of a server.</p>
+
+<h4>Technical Details</h4>
+
+<p>Due to the large amount of data to be processed, there are some unique challenges that need to be managed in order to keep the app feeling responsive. The first challenge is the sheer volume of data to get through. Early on it was clear that this could not be hardcoded or read in by javascript fast enough. We made the decision to create our own API to serve up the data. </p>
+
+<p>Using the MVC framework, we were able to design an API, database, and front end to support our application. The user is able to access the front end of the application and use the controls provided to utilize the API and extract data from the database. Entity Framework is used to convert the data from the database into a json object that is sent back to the front end. </p>
+
+<p>Through our use of the custom API and the database, we were able to see significant performance increases even when working with absolutely massive datasets. Our current version includes ~248,000 entries while still retaining response times of less than one second. </p>
+
+<p>The user can filter the results based on a time slot to avoid clutter. This filtering happens server side to save time and improve performance. In all, the user should have a seamless experience and will be able to access the data they want quickly. </p>
